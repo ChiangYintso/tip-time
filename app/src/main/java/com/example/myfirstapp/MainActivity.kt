@@ -1,7 +1,9 @@
 package com.example.myfirstapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myfirstapp.adapter.ItemAdapter
+import com.example.myfirstapp.data.DataSource
 import com.example.myfirstapp.databinding.ActivityMainBinding
 import java.text.NumberFormat
 
@@ -14,6 +16,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.calculateButton.setOnClickListener { calcTip() }
+
+        // Initialize data.
+        val myDataset = DataSource().loadAffirmations()
+
+        binding.recyclerView.adapter = ItemAdapter(this, myDataset)
+
+        // Use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        binding.recyclerView.setHasFixedSize(true)
     }
 
     private fun calcTip() {
